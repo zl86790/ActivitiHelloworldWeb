@@ -13,8 +13,8 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd
       ">
 
-	<mvc:annotation-driven></mvc:annotation-driven>
-	<context:component-scan base-package="name.lizhe.*"></context:component-scan>
+	<mvc:annotation-driven/>
+	<context:component-scan base-package="name.lizhe"></context:component-scan>
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 
@@ -33,5 +33,19 @@
 		<property name="jdbcPassword" value="root" />
 		<property name="databaseSchemaUpdate" value="true" />
 	</bean>
+
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
 
 </beans>
